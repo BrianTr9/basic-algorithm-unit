@@ -1,78 +1,79 @@
-//Danh sach lien ket don
+// Singly Linked List
 #include <bits/stdc++.h>
 using namespace std;
  
-struct Node{
+struct Node {
 	int data;
 	Node *next;
 };
  
 typedef struct Node* node;
  
-//Cap phat dong mot node moi voi du lieu la so nguyen x
-node makeNode(int x){
+// Create new node with value x
+node makeNode(int x) {
 	node tmp = new Node();
 	tmp->data = x;
-	tmp->next = NULL; //nullptr
+	tmp->next = NULL;
 	return tmp;
 }
  
-//Kiem tra rong
-bool empty(node a){
+// Check if list is empty
+bool empty(node a) {
 	return a == NULL;
 }
  
-int Size(node a){
+// Get size of list
+int Size(node a) {
 	int cnt = 0;
-	while(a != NULL){
+	while(a != NULL) {
 		++cnt;
-		a = a->next; // gan dia chi cua not tiep theo cho node hien tai
-		//cho node hien tai nhay sang not tiep theo
+		a = a->next;
 	}
 	return cnt;
 }
  
-//them 1 phan tu vao dau danh sach lien ket
-void insertFirst(node &a, int x){
+// Insert element at beginning
+void insertFirst(node &a, int x) {
 	node tmp = makeNode(x);
-	if(a == NULL){
+	if(a == NULL) {
 		a = tmp;
-	}
-	else{
+	} else {
 		tmp->next = a;
 		a = tmp;
 	}
 }
  
-//Them 1 phan tu vao cuoi dslk
-void insertLast(node &a, int x){
+// Insert element at end
+void insertLast(node &a, int x) {
 	node tmp = makeNode(x);
-	if(a == NULL){
+	if(a == NULL) {
 		a = tmp;
-	}
-	else{
+	} else {
 		node p = a;
-		while(p->next != NULL){
+		while(p->next != NULL) {
 			p = p->next;
 		}
 		p->next = tmp;
 	}
 }
  
-//Them 1 phan tu vao giua
-void insertMiddle(node &a, int x, int pos){
+// Insert element at position
+void insertMiddle(node &a, int x, int pos) {
 	int n = Size(a);
-	if(pos <= 0 || pos > n + 1){
-		cout << "Vi tri chen khong hop le !\n";
+	if(pos <= 0 || pos > n + 1) {
+		cout << "Invalid position!\\n";
+		return;
 	}
-	if(pos == 1){
-		insertFirst(a, x); return;
+	if(pos == 1) {
+		insertFirst(a, x);
+		return;
 	}
-	else if(pos == n +1 ){
-		insertLast(a, x); return;
+	else if(pos == n + 1) {
+		insertLast(a, x);
+		return;
 	}
 	node p = a;
-	for(int i = 1; i < pos - 1; i++){
+	for(int i = 1; i < pos - 1; i++) {
 		p = p->next;
 	}
 	node tmp = makeNode(x);
@@ -80,64 +81,63 @@ void insertMiddle(node &a, int x, int pos){
 	p->next = tmp;
 }
  
-//xoa phan tu o dau
-void deleteFirst(node &a){
+// Delete from beginning
+void deleteFirst(node &a) {
 	if(a == NULL) return;
 	a = a->next;
 }
  
-//xoa phan tu o cuoi
-void deleteLast(node &a){
+// Delete from end
+void deleteLast(node &a) {
 	if(a == NULL) return;
-	node truoc = NULL, sau = a;
-	while(sau->next != NULL){
-		truoc = sau;
-		sau = sau->next;
+	node prev = NULL, curr = a;
+	while(curr->next != NULL) {
+		prev = curr;
+		curr = curr->next;
 	}
-	if(truoc == NULL){
+	if(prev == NULL) {
 		a = NULL;
-	}
-	else{
-		truoc->next = NULL;
+	} else {
+		prev->next = NULL;
 	}
 }
  
-//Xoa o giua
-void deleteMiddle(node &a, int pos){
-	if(pos <=0 || pos > Size(a)) return;
-	node truoc = NULL, sau = a;
-	for(int i = 1; i < pos; i++){
-		truoc = sau;
-		sau = sau->next;
+// Delete from position
+void deleteMiddle(node &a, int pos) {
+	if(pos <= 0 || pos > Size(a)) return;
+	node prev = NULL, curr = a;
+	for(int i = 1; i < pos; i++) {
+		prev = curr;
+		curr = curr->next;
 	}
-	if(truoc == NULL){
+	if(prev == NULL) {
 		a = a->next;
-	}
-	else{
-		truoc->next = sau->next;
+	} else {
+		prev->next = curr->next;
 	}
 }
  
-void in(node a){
-	cout << "--------------------------------\n";
-	while(a != NULL){
+void print(node a) {
+	cout << "--------------------------------\\n";
+	while(a != NULL) {
 		cout << a->data << " ";
 		a = a->next;
 	}
 	cout << endl;
-	cout << "--------------------------------\n";
+	cout << "--------------------------------\\n";
 }
  
-void sapxep(node &a){
-	for(node p = a; p->next != NULL; p = p->next){
-		node min = p;
-		for(node q = p->next; q != NULL; q = q->next){
-			if(q->data < min->data){
-				min = q;
+// Sort list using selection sort
+void sort(node &a) {
+	for(node p = a; p->next != NULL; p = p->next) {
+		node minNode = p;
+		for(node q = p->next; q != NULL; q = q->next) {
+			if(q->data < minNode->data) {
+				minNode = q;
 			}
 		}
-		int tmp = min->data;
-		min->data = p->data;
+		int tmp = minNode->data;
+		minNode->data = p->data;
 		p->data = tmp;
 	}
 }
@@ -146,52 +146,53 @@ void sapxep(node &a){
 //Tim phan tu lon nhat, nho nhat
  
  
-int main(){
+int main() {
 	node head = NULL;
-	while(1){
-		cout << "-----------------MENU---------------\n";
-		cout << "1. Chen phan tu vao dau danh sach\n";
-		cout << "2. Chen phan tu vao cuoi danh sach\n";
-		cout << "3. Chen phan tu vao giua danh sach\n";
-		cout << "4. Xoa phan tu o dau\n";
-		cout << "5. Xoa phan tu o cuoi\n";
-		cout << "6. Xoa phan tu o giua\n";
-		cout << "7. Duyet danh sach lient ket\n";
-		cout << "8. Sap xep cac phan tu trong dslk\n";
-		cout << "0. Thoat !\n";
-		cout << "-------------------------------------\n";
-		cout << "Nhap lua chon :";
-		int lc; cin >> lc;
-		if(lc == 1){
-			int x; cout << "Nhap gia tri can chen :"; cin >> x;
+	while(1) {
+		cout << "-----------MENU-----------\\n";
+		cout << "1. Insert at beginning\\n";
+		cout << "2. Insert at end\\n";
+		cout << "3. Insert at position\\n";
+		cout << "4. Delete from beginning\\n";
+		cout << "5. Delete from end\\n";
+		cout << "6. Delete from position\\n";
+		cout << "7. Print list\\n";
+		cout << "8. Sort list\\n";
+		cout << "0. Exit\\n";
+		cout << "-------------------------\\n";
+		cout << "Choose: ";
+		int choice; cin >> choice;
+		if(choice == 1) {
+			int x; cout << "Enter value: "; cin >> x;
 			insertFirst(head, x);
 		}
-		else if(lc == 2){
-			int x; cout << "Nhap gia tri can chen :"; cin >> x;
+		else if(choice == 2) {
+			int x; cout << "Enter value: "; cin >> x;
 			insertLast(head, x);
 		}
-		else if(lc == 3){
-			int x; cout << "Nhap gia tri can chen :"; cin >> x;
-			int pos; cout << "Nhap vi tri can chen :"; cin >> pos;
+		else if(choice == 3) {
+			int x, pos; 
+			cout << "Enter value: "; cin >> x;
+			cout << "Enter position: "; cin >> pos;
 			insertMiddle(head, x, pos);
 		}
-		else if(lc == 4){
+		else if(choice == 4) {
 			deleteFirst(head);
 		}
-		else if(lc == 5){
+		else if(choice == 5) {
 			deleteLast(head);
 		}
-		else if(lc == 6){
-			int pos; cout << "Nhap vi tri can xoa:"; cin >> pos;
+		else if(choice == 6) {
+			int pos; cout << "Enter position: "; cin >> pos;
 			deleteMiddle(head, pos);
 		}
-		else if(lc == 7){
-			in(head);
+		else if(choice == 7) {
+			print(head);
 		}
-		else if(lc == 8){
-			sapxep(head);
+		else if(choice == 8) {
+			sort(head);
 		}
-		else if(lc == 0){
+		else if(choice == 0) {
 			break;
 		}
 	}

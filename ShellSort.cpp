@@ -4,9 +4,7 @@
 void shellSort(std::vector<int>& arr) {
     int n = arr.size();
 
-    // Bắt đầu với khoảng cách lớn và giảm dần
     for (int gap = n / 2; gap > 0; gap /= 2) {
-        // Thực hiện sắp xếp chèn cho các phần tử cách nhau bởi khoảng cách gap
         for (int i = gap; i < n; i++) {
             int temp = arr[i];
             int j;

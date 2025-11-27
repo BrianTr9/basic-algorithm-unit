@@ -49,7 +49,6 @@ void solve()
 }
 int main()
 {
-    freopen("DSU.inp","r",stdin);
     input();
     solve();
     return 0;

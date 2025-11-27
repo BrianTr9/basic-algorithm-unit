@@ -192,17 +192,17 @@ int main() {
     tree.insert(50);
     tree.insert(25);
 
-    cout << "Cay AVL sau khi chen cac phan tu: ";
+    cout << "AVL tree after insertions: ";
     tree.preOrder();
     cout << endl;
 
     tree.remove(40);
-    cout << "Cay AVL sau khi xoa 40: ";
+    cout << "AVL tree after removing 40: ";
     tree.preOrder();
     cout << endl;
 
-    cout << "Tim kiem 30: " << (tree.search(30) ? "Tim thay" : "Khong tim thay") << endl;
-    cout << "Tim kiem 40: " << (tree.search(40) ? "Tim thay" : "Khong tim thay") << endl;
+    cout << "Search 30: " << (tree.search(30) ? "Found" : "Not found") << endl;
+    cout << "Search 40: " << (tree.search(40) ? "Found" : "Not found") << endl;
 
     return 0;
 }

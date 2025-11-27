@@ -1,25 +1,20 @@
 #include <iostream>
 #include <vector>
 
-// Hàm hợp nhất hai nửa đã sắp xếp
+// Merge two sorted subarrays
 void merge(std::vector<int>& arr, int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
-    // Tạo các mảng tạm thời
     std::vector<int> L(n1);
     std::vector<int> R(n2);
 
-    // Sao chép dữ liệu vào các mảng tạm thời
     for (int i = 0; i < n1; i++)
         L[i] = arr[left + i];
     for (int j = 0; j < n2; j++)
         R[j] = arr[mid + 1 + j];
 
-    // Hợp nhất các mảng tạm thời trở lại mảng ban đầu
-    int i = 0; // Chỉ số ban đầu của mảng con đầu tiên
-    int j = 0; // Chỉ số ban đầu của mảng con thứ hai
-    int k = left; // Chỉ số ban đầu của mảng hợp nhất
+    int i = 0, j = 0, k = left;
 
     while (i < n1 && j < n2) {
         if (L[i] <= R[j]) {
@@ -32,14 +27,12 @@ void merge(std::vector<int>& arr, int left, int mid, int right) {
         k++;
     }
 
-    // Sao chép các phần tử còn lại của L[], nếu có
     while (i < n1) {
         arr[k] = L[i];
         i++;
         k++;
     }
 
-    // Sao chép các phần tử còn lại của R[], nếu có
     while (j < n2) {
         arr[k] = R[j];
         j++;
@@ -47,7 +40,7 @@ void merge(std::vector<int>& arr, int left, int mid, int right) {
     }
 }
 
-// Hàm merge sort
+// Merge sort implementation
 void mergeSort(std::vector<int>& arr, int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;

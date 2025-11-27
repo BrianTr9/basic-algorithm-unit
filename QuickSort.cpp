@@ -1,17 +1,17 @@
 #include <iostream>
 #include <vector>
 
-// Hàm hoán đổi hai phần tử
+// Swap two elements
 void swap(int& a, int& b) {
     int temp = a;
     a = b;
     b = temp;
 }
 
-// Hàm phân chia mảng và trả về chỉ số của chốt
+// Partition array and return pivot index
 int partition(std::vector<int>& arr, int low, int high) {
-    int pivot = arr[high]; // Chọn phần tử cuối cùng làm chốt
-    int i = low - 1; // Chỉ số của phần tử nhỏ hơn chốt
+    int pivot = arr[high];
+    int i = low - 1;
 
     for (int j = low; j < high; j++) {
         if (arr[j] < pivot) {
@@ -23,12 +23,10 @@ int partition(std::vector<int>& arr, int low, int high) {
     return i + 1;
 }
 
-// Hàm quick sort
+// Quick sort implementation
 void quickSort(std::vector<int>& arr, int low, int high) {
     if (low < high) {
-        int pi = partition(arr, low, high); // Chỉ số của chốt
-
-        // Đệ quy sắp xếp các phần tử trước và sau chốt
+        int pi = partition(arr, low, high);
         quickSort(arr, low, pi - 1);
         quickSort(arr, pi + 1, high);
     }

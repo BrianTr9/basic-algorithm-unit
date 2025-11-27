@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
-int n,cnt=0; // number of nodes
-vector<int> adj[100009]; // adjacency list of graph
-bool isCut[100009];
+int n,cnt=0; // Number of nodes
+vector<int> adj[100009]; // Adjacency list
+bool isCut[100009]; // Articulation points
 vector<bool> visited;
 vector<int> tin, low;
 int timer;

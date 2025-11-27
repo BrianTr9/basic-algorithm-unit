@@ -1,4 +1,4 @@
-// C++ function to search a given key in a given BST
+// Binary Search Tree - Search operation
 
 #include <iostream>
 
@@ -9,18 +9,16 @@ struct node {
 	struct node *left, *right;
 };
 
-// A utility function to create a new BST node
+// Create new BST node
 struct node* newNode(int item)
 {
-	struct node* temp
-		= new struct node;
+	struct node* temp = new struct node;
 	temp->key = item;
 	temp->left = temp->right = NULL;
 	return temp;
 }
 
-// A utility function to insert
-// a new node with given key in BST
+// Insert new node with given key
 struct node* insert(struct node* node, int key)
 {
 	// If the tree is empty, return a new node

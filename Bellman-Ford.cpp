@@ -20,12 +20,12 @@ void bellmanFord(int vertices, int edges, vector<Edge>& graph, int source) {
             int weight = graph[j].weight;
             if (distance[u] != INT_MAX && distance[u] + weight < distance[v]) {
                 distance[v] = distance[u] + weight;
-                parent[v] = u; // Cập nhật đỉnh cha của v
+                parent[v] = u;
             }
         }
     }
 
-    // Kiểm tra chu trình âm
+    // Check for negative cycle
     for (int j = 0; j < edges; ++j) {
         int u = graph[j].u;
         int v = graph[j].v;
@@ -36,7 +36,7 @@ void bellmanFord(int vertices, int edges, vector<Edge>& graph, int source) {
         }
     }
 
-    // Kiểm tra và in đường đi ngắn nhất từ nguồn đến các đỉnh khác
+    // Print shortest distances
     cout << "Vertex Distance from Source" << endl;
     for (int i = 0; i < vertices; ++i) {
         if (distance[i] == INT_MAX) {
@@ -44,7 +44,7 @@ void bellmanFord(int vertices, int edges, vector<Edge>& graph, int source) {
         } else {
             cout << i << "\t\t" << distance[i] << "\t\t";
 
-            // Truy vết và in đường đi từ nguồn đến đỉnh i
+            // Trace path
             vector<int> path;
             for (int current = i; current != -1; current = parent[current]) {
                 path.push_back(current);

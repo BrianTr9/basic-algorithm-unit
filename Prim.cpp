@@ -45,7 +45,6 @@ void solve()
 int main()
 {
     input();
-    //cout<<"--------------"<<endl;
     solve();
     return 0;
 }
