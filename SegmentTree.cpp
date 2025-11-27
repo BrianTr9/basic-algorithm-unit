@@ -1,70 +1,56 @@
 #include <iostream>
 #include <vector>
-#include <algorithm> // Nếu bạn sử dụng các thuật toán như std::max, std::min
-#include <stdexcept> // Nếu bạn sử dụng các ngoại lệ như std::out_of_range
+#include <algorithm>
+#include <stdexcept>
 
 using namespace std;
 
-const int inf  = 1e9 + 7;
-const int maxN = 1e5 + 7;
+const int INF = 1e9 + 7;
+const int MAXN = 1e5 + 7;
 
 int n, q;
-int a[maxN];
-int st[4 * maxN]; // Lí do sử dụng kích thước mảng là 4 * maxN sẽ được giải thích ở phần sau
+int a[MAXN];
+int st[4 * MAXN]; // Segment tree array (4x size for safety)
 
-// Thủ tục xây dựng cây phân đoạn
+// Build segment tree
 void build(int id, int l, int r) {
-    // Đoạn chỉ gồm 1 phần tử, không có nút con
     if (l == r) {
         st[id] = a[l];
         return;
     }
 
-    // Gọi đệ quy để xử lý các nút con của nút id
-    int mid = l + r >> 1; // (l + r) / 2
+    int mid = l + r >> 1;
     build(2 * id, l, mid);
     build(2 * id + 1, mid + 1, r);
-
-    // Cập nhật lại giá trị min của đoạn [l, r] theo 2 nút con
     st[id] = min(st[2 * id], st[2 * id + 1]);
 }
 
-// Thủ tục cập nhật
+// Update element at position i
 void update(int id, int l, int r, int i, int val) {
-    // i nằm ngoài đoạn [l, r], ta bỏ qua nút id
     if (l > i || r < i) return;
 
-    // Đoạn chỉ gồm 1 phần tử, không có nút con
     if (l == r) {
         st[id] = val;
         return;
     }
 
-    // Gọi đệ quy để xử lý các nút con của nút id
-    int mid = l + r >> 1; // (l + r) / 2
+    int mid = l + r >> 1;
     update(2 * id, l, mid, i, val);
     update(2 * id + 1, mid + 1, r, i, val);
-
-    // Cập nhật lại giá trị min của đoạn [l, r] theo 2 nút con
     st[id] = min(st[2 * id], st[2 * id + 1]);
 }
 
 
-// Hàm lấy giá trị
+// Query minimum in range [u, v]
 int get(int id, int l, int r, int u, int v) {
-    // Đoạn [u, v] không giao với đoạn [l, r], ta bỏ qua đoạn này
-    if (l >  v || r <  u) return inf;
+    if (l > v || r < u) return INF;
 
-    /* Đoạn [l, r] nằm hoàn toàn trong đoạn [u, v] mà ta đang truy vấn,
-        ta trả lại thông tin lưu ở nút id */
     if (l >= u && r <= v) return st[id];
 
-    // Gọi đệ quy với các nút con của nút id
-    int mid = l + r >> 1; // (l + r) / 2
+    int mid = l + r >> 1;
     int get1 = get(2 * id, l, mid, u, v);
     int get2 = get(2 * id + 1, mid + 1, r, u, v);
 
-    // Trả ra giá trị nhỏ nhất theo 2 nút con
     return min(get1, get2);
 }
 
@@ -77,7 +63,7 @@ int main() {
     while (q--) {
         int type, x, y;
         cin >> type >> x >> y;
-        if (type == 1) update(1, 1, n, x, y); // Gán giá trị y cho phần tử ở vị trí x
-        else cout << get(1, 1, n, x, y) << '\n'; // In ra giá trị nhỏ nhất trong đoạn [x, y]
+        if (type == 1) update(1, 1, n, x, y); // Set arr[x] = y
+        else cout << get(1, 1, n, x, y) << '\n'; // Query min in range [x, y]
     }
 }

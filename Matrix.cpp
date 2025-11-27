@@ -2,15 +2,15 @@
 
 using namespace std;
 
-using type = int; // Kiểu dữ liệu các phần tử của ma trận
+using type = int; // Matrix element data type
 
 struct Matrix {
     vector <vector <type> > data;
 
-    // Số lượng hàng của ma trận
+    // Number of rows
     int row() const { return data.size(); }
 
-    // Số lượng hàng của ma trận
+    // Number of columns
     int col() const { return data[0].size(); }
 
     auto & operator [] (int i) { return data[i]; }
@@ -22,16 +22,14 @@ struct Matrix {
     Matrix(int r, int c): data(r, vector <type> (c)) { }
 
     Matrix(const vector <vector <type> > &d): data(d) {
-
-        // Kiểm tra các hàng có cùng size không và size có lớn hơn 0 hay không
-        // Tuy nhiên không thực sự cần thiết, ta có thể bỏ các dòng /**/ đi
+        // Validate matrix: all rows have same size and size > 0
         /**/ assert(d.size());
         /**/ int size = d[0].size();
         /**/ assert(size);
         /**/ for (auto x : d) assert(x.size() == size);
     }
 
-    // In ra ma trận.
+    // Output matrix
     friend ostream & operator << (ostream &out, const Matrix &d) {
         for (auto x : d.data) {
             for (auto y : x) out << y << ' ';
@@ -40,18 +38,18 @@ struct Matrix {
         return out;
     }
 
-    // Ma trận đơn  vị
+    // Identity matrix
     static Matrix identity(long long n) {
         Matrix a = Matrix(n, n);
         while (n--) a[n][n] = 1;
         return a;
     }
 
-    // Nhân ma trận
+    // Matrix multiplication
     Matrix operator * (const Matrix &b) {
         Matrix a = *this;
 
-        // Kiểm tra điều kiện nhân ma trận
+        // Verify multiplication condition: a.col() == b.row()
         assert(a.col() == b.row());
 
         Matrix c(a.row(), b.col());
@@ -62,10 +60,10 @@ struct Matrix {
         return c;
     }
 
-    // Lũy thừa ma trận
+    // Matrix exponentiation (requires square matrix)
     Matrix pow(long long exp) {
 
-        // Kiểm tra điều kiện lũy thừa ma trận (là ma trận vuông)
+        // Verify matrix is square
         assert(row() == col());
 
         Matrix base = *this, ans = identity(row());

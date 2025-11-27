@@ -45,11 +45,11 @@ void mergeSort(std::vector<int>& arr, int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
 
-        // Đệ quy sắp xếp nửa đầu và nửa sau
+        // Recursively sort left and right halves
         mergeSort(arr, left, mid);
         mergeSort(arr, mid + 1, right);
 
-        // Hợp nhất hai nửa đã sắp xếp
+        // Merge sorted halves
         merge(arr, left, mid, right);
     }
 }
