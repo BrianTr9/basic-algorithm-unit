@@ -38,6 +38,7 @@ BAU serves as a **clean, minimal algorithm library** for:
 
 ### **Graph Algorithms**
 - `Bellman-Ford.cpp` - Single-source shortest path (negative edges)
+- `FloydWarshall.cpp` - All-pairs shortest paths (dynamic programming)
 - `Prim.cpp` - Minimum Spanning Tree (edge-based)
 - `Kruskal_MST.cpp` - Minimum Spanning Tree (DSU-based)
 - `FindBridges.cpp` - Find bridges in undirected graph
